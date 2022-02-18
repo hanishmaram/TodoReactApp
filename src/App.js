@@ -1,25 +1,41 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
-  return (
+
+
+const [todos, setTodos] = useState(['hanish','vinya','pallavi']);
+const [todoText,setTodoText]=useState('');
+
+function createTodo(){
+  setTodos(oldTodos=>{
+    setTodoText('');
+    return [...oldTodos, todoText];
+  });
+}
+
+function checkForEnterKey(e){
+  if(e.keyCode===13){
+    createTodo();
+  }
+}
+
+  return( 
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>Todo App</p>    
+      <input type="text" 
+      //Same can be done with form submit without onKeyDown
+      onKeyDown={checkForEnterKey} 
+      value={todoText} onChange={event=> setTodoText(event.target.value)}/>
+      <button onClick={createTodo}>Add</button>
+      <ul>
+        {todos.map(todo=>{
+          return <li>{todo}</li>
+        })}
+      </ul>
     </div>
-  );
+  )
 }
 
 export default App;
